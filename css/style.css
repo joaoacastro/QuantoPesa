@@ -1,0 +1,35 @@
+body {
+  background-color: #f5f5f5;
+  color: #222;
+}
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.salario {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.salario img {
+  width: 22px;
+  height: auto;
+}
+
+button{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+  width: 100%;
+  background-color: #acacacff;
+  border-radius: 12px;
+}
+
+button:hover{
+  background-color: #e7e7e7;
+}

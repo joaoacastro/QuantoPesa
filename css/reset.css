@@ -1,0 +1,66 @@
+/* =========================
+   RESET + BASE DEFAULT
+   ========================= */
+
+/* Remove margens e paddings padrões */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Define fonte base e melhora leitura */
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Remove estilos padrões de listas */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Links sem sublinhado e com herança de cor */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Imagens e mídias responsivas */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Inputs e botões com fonte consistente */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Botões sem estilo padrão */
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Tabelas */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}

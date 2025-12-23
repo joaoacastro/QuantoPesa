@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>.:QuantoPesa:.</title>
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/icons/porcentagem.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./assets/icons/porcentagem.png"
+    />
+
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Quanto Pesa</h1>
+
+      <section class="inputs">
+        <div class="input-group">
+          <label for="produto-br">Valor do produto (R$)</label>
+          <input type="number" id="produto-br" />
+        </div>
+
+        <div class="input-group">
+          <label for="produto-pt">Valor do produto (€)</label>
+          <input type="number" id="produto-pt" />
+        </div>
+      </section>
+
+      <button id="calculate">Calcular</button>
+
+      <section id="resultado"></section>
+
+      <div class="salariominimo">
+        <h3>Salário mínimo de referência</h3>
+
+        <div class="salario">
+          <img src="./assets/icons/br.png" alt="Brasil" />
+          <span id="salarioMinimo-br"></span>
+        </div>
+
+        <div class="salario">
+          <img src="./assets/icons/pt.png" alt="Portugal" />
+          <span id="salarioMinimo-pt"></span>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>© 2025</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
