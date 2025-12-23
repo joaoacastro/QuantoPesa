@@ -1,14 +1,11 @@
-// Salários mínimos de referência
+// Configuração dos salários mínimos
 const salarioMinimo = {
   br: 1518,
   pt: 870,
+  usa: 1160,
 };
 
 // Elementos da interface
-const inputSalarioMinimoBR = document.getElementById("salarioMinimo-br");
-const inputSalarioMinimoPT = document.getElementById("salarioMinimo-pt");
-const produtoBR = document.getElementById("produto-br");
-const produtoPT = document.getElementById("produto-pt");
 const botaoCalcular = document.getElementById("calculate");
 const resultado = document.getElementById("resultado");
 
@@ -20,83 +17,104 @@ const formatarMoeda = (valor, local, moeda) => {
   }).format(valor);
 };
 
-// Exibe salários de referência no rodapé ao carregar a página
-if (inputSalarioMinimoBR)
-  inputSalarioMinimoBR.textContent = formatarMoeda(
-    salarioMinimo.br,
-    "pt-BR",
-    "BRL"
-  );
-if (inputSalarioMinimoPT)
-  inputSalarioMinimoPT.textContent = formatarMoeda(
-    salarioMinimo.pt,
-    "pt-PT",
-    "EUR"
-  );
+// Inicializa os valores de referência no rodapé
+document.getElementById("salarioMinimo-br").textContent = formatarMoeda(
+  salarioMinimo.br,
+  "pt-BR",
+  "BRL"
+);
+document.getElementById("salarioMinimo-pt").textContent = formatarMoeda(
+  salarioMinimo.pt,
+  "pt-PT",
+  "EUR"
+);
+document.getElementById("salarioMinimo-usa").textContent = formatarMoeda(
+  salarioMinimo.usa,
+  "en-US",
+  "USD"
+);
 
-// Função para definir a cor dinâmica baseada no percentual
+// Define a cor baseada no peso no bolso
 const definirCor = (p) => {
-  if (p <= 50) return "#1e8e3e"; // Verde (baixo impacto)
-  if (p <= 75) return "#fbbc04"; // Amarelo (médio impacto)
-  if (p <= 100) return "#d93025"; // Vermelho (alto impacto)
-  return "#9c27b0"; // Roxo (crítico / acima de 100%)
+  if (p <= 50) return "#1e8e3e"; // Verde
+  if (p <= 75) return "#fbbc04"; // Amarelo
+  if (p <= 100) return "#d93025"; // Vermelho
+  return "#9c27b0"; // Roxo (Crítico)
 };
 
-// Evento de clique para o cálculo
 botaoCalcular.addEventListener("click", function () {
-  const valorProdutoBR = Number(produtoBR.value);
-  const valorProdutoPT = Number(produtoPT.value);
-
-  // Validação simples
-  if (valorProdutoBR <= 0 && valorProdutoPT <= 0) {
-    alert("Por favor, insira o valor de pelo menos um produto.");
-    return;
-  }
-
-  // Limpa os cards anteriores
-  resultado.innerHTML = "";
-
-  // Array de objetos para facilitar a criação dos cards via loop
-  const configuracao = [
+  // Lista de campos para processar
+  const dados = [
     {
+      id: "produto-br",
       label: "No Brasil",
-      valor: valorProdutoBR,
       salario: salarioMinimo.br,
       local: "pt-BR",
       moeda: "BRL",
     },
     {
+      id: "produto-pt",
       label: "Em Portugal",
-      valor: valorProdutoPT,
       salario: salarioMinimo.pt,
       local: "pt-PT",
       moeda: "EUR",
     },
+    {
+      id: "produto-usa",
+      label: "Nos EUA",
+      salario: salarioMinimo.usa,
+      local: "en-US",
+      moeda: "USD",
+    },
   ];
 
-  configuracao.forEach((item) => {
-    // Apenas gera o card se houver um valor preenchido para o país
-    if (item.valor > 0) {
-      const percentual = (item.valor / item.salario) * 100;
-      const corDinamica = definirCor(percentual);
-      const valorFormatado = formatarMoeda(item.valor, item.local, item.moeda);
+  resultado.innerHTML = ""; // Limpa resultados anteriores
+  let algumPreenchido = false;
 
+  dados.forEach((item) => {
+    const inputVal = document.getElementById(item.id).value;
+    const valor = Number(inputVal);
+
+    if (valor > 0) {
+      algumPreenchido = true;
+      const percentual = (valor / item.salario) * 100;
+      const cor = definirCor(percentual);
+
+      // Cria a estrutura do card inspirada na lista enviada
+      const cardId = `fill-${item.id}`;
       resultado.innerHTML += `
         <div class="card">
-          <div class="valor-moeda">${valorFormatado}</div>
-          <h4>${item.label}</h4>
-          <div class="porcentagem" style="color: ${corDinamica}">
+          <div class="info-local">
+            <h4>${item.label}</h4>
+            <div class="valor-moeda">${formatarMoeda(
+              valor,
+              item.local,
+              item.moeda
+            )}</div>
+          </div>
+          
+          <div class="porcentagem" style="color: ${cor}">
             ${percentual.toFixed(2)}%
           </div>
-          <p>do salário mínimo mensal</p>
-          <div class="progress-bar">
-            <div class="progress-fill" style="width: ${Math.min(
-              percentual,
-              100
-            )}%; background-color: ${corDinamica};"></div>
+          
+          <div class="container-barra">
+            <div class="progress-bar">
+              <div class="progress-fill" id="${cardId}" style="background-color: ${cor};"></div>
+            </div>
+            <div class="legenda-barra">do salário mínimo mensal</div>
           </div>
         </div>
       `;
+
+      // Pequeno delay para garantir que o CSS renderizou antes de animar a barra
+      setTimeout(() => {
+        const barra = document.getElementById(cardId);
+        if (barra) barra.style.width = `${Math.min(percentual, 100)}%`;
+      }, 50);
     }
   });
+
+  if (!algumPreenchido) {
+    alert("Por favor, insira o valor de pelo menos um produto.");
+  }
 });

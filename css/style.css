@@ -1,13 +1,15 @@
+/* ==========================================================================
+   ESTILO GERAL
+   ========================================================================== */
 body {
-  background-color: #f0f2f5;
+  background-color: #f4f7f6;
   color: #333;
   font-family: "Roboto", sans-serif;
 }
 
-/* Conteúdo principal */
 main {
   width: 100%;
-  max-width: 400px; /* Sua preferência de largura */
+  max-width: 400px; /* Largura ideal que você definiu */
   margin: 0 auto;
   padding: 2rem 1rem;
   display: flex;
@@ -17,28 +19,31 @@ main {
 }
 
 h3 {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 800;
   margin-bottom: 10px;
   text-align: center;
+  color: #2c3e50;
 }
 
-/* Estilização dos Inputs */
+/* ==========================================================================
+   INPUTS E BOTÃO
+   ========================================================================== */
 .input-group {
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .input-group label {
   display: block;
   font-weight: 500;
-  margin-bottom: 8px;
-  color: #555;
-  font-size: 0.9rem;
+  margin-bottom: 5px;
+  color: #666;
+  font-size: 0.85rem;
 }
 
 input {
   width: 100%;
-  padding: 14px;
+  padding: 12px;
   border: 1px solid #ddd;
   border-radius: 10px;
   font-size: 1rem;
@@ -48,12 +53,11 @@ input {
 
 input:focus {
   outline: none;
-  border-color: #1e90ff;
+  border-color: #3498db;
 }
 
-/* Botão Calcular com Degradê */
 #calculate {
-  margin: 15px 0;
+  margin: 10px 0;
   padding: 16px;
   width: 100%;
   background: linear-gradient(135deg, #1e90ff, #d24dff);
@@ -62,91 +66,97 @@ input:focus {
   font-size: 1.1rem;
   font-weight: bold;
   box-shadow: 0 5px 15px rgba(30, 144, 255, 0.3);
-  transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
   border: none;
+  transition: transform 0.2s;
 }
 
 #calculate:active {
   transform: scale(0.97);
 }
 
-/* Seção de Resultados */
-/* Seção de Resultados */
+/* ==========================================================================
+   RESULTADOS (CARDS EM LISTA)
+   ========================================================================== */
 #resultado {
   display: flex;
-  flex-wrap: nowrap; /* Força a ficarem na mesma linha */
-  justify-content: center;
-  gap: 10px; /* Reduzi um pouco o espaço entre eles */
-  margin-top: 15px;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
   width: 100%;
 }
 
 .card {
   background: white;
-  padding: 15px 10px; /* Reduzi o padding para o conteúdo caber melhor */
-  border-radius: 15px;
-  text-align: center;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-  display: flex;
-  flex-direction: column;
+  width: 100%;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  display: grid;
+  grid-template-columns: 1fr auto; /* Texto esquerda, Porcentagem direita */
+  gap: 10px;
   align-items: center;
-  
-  /* Ajuste para caberem dois em 400px */
-  flex: 1; 
-  min-width: 0; /* Remove a restrição de tamanho mínimo anterior */
   box-sizing: border-box;
+  animation: fadeIn 0.5s ease;
 }
 
-.card h4 { 
-  font-size: 0.85rem; 
-  color: #777; 
-  margin: 5px 0;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card .info-local h4 {
+  font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  color: #95a5a6;
+  letter-spacing: 1px;
+  margin: 0;
 }
 
-.card .valor-moeda { 
-  font-weight: 900; 
-  font-size: 1rem; 
-  color: #222;
+.card .valor-moeda {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #2c3e50;
 }
 
-/* .card .porcentagem { 
-  font-size: 2.2rem; 
-  font-weight: 900; 
-  margin: 12px 0;
-  line-height: 1;
-} */
-
-.card .porcentagem { 
-  font-size: 1.6rem; 
-  margin: 8px 0;
+.card .porcentagem {
+  font-size: 2rem;
+  font-weight: 900;
+  text-align: right;
 }
 
-.card p { 
-  font-size: 0.75rem; 
-  color: #999; 
-  margin-bottom: 15px; 
-  line-height: 1.2;
+.card .container-barra {
+  grid-column: 1 / 3; /* Barra ocupa a largura toda embaixo */
+  width: 100%;
+  margin-top: 5px;
 }
 
-/* Barra de Progresso */
-.progress-bar {
-  background: #f0f0f0;
+.card .progress-bar {
+  background: #ecf0f1;
   border-radius: 10px;
-  height: 8px;
-  width: 90%;
+  height: 10px;
+  width: 100%;
   overflow: hidden;
 }
 
-.progress-fill {
+.card .progress-fill {
   height: 100%;
   border-radius: 10px;
-  transition: width 0.5s ease-out;
+  width: 0; /* Começa em 0 para animar */
+  transition: width 1.2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
 }
 
-/* Rodapé de Referência */
+.card .legenda-barra {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 0.7rem;
+  color: #bdc3c7;
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   REFERÊNCIA E FOOTER
+   ========================================================================== */
 .salariominimo {
   background-color: #fff;
   border: 1px solid #eee;
@@ -155,10 +165,10 @@ input:focus {
   margin-top: 30px;
 }
 
-.salariominimo h6 { 
-  margin-bottom: 12px; 
-  font-size: 0.8rem; 
-  color: #666;
+.salariominimo h6 {
+  margin-bottom: 12px;
+  font-size: 0.8rem;
+  color: #7f8c8d;
   text-align: center;
 }
 
@@ -168,16 +178,12 @@ input:focus {
   justify-content: center;
   gap: 10px;
   margin-bottom: 8px;
-}
-
-.salario img {
-  width: 22px;
-  height: auto;
+  font-size: 0.85rem;
 }
 
 footer {
   text-align: center;
-  color: #aaa;
+  color: #bdc3c7;
   padding: 20px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
 }
