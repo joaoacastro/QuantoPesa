@@ -9,32 +9,38 @@
   box-sizing: border-box;
 }
 
-/* Define fonte base e melhora leitura */
 html {
-  font-size: 16px;
+  font-size: 14px;
   scroll-behavior: smooth;
 }
 
 body {
   min-height: 100vh;
-  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+  font-family: "Roboto", sans-serif;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Remove estilos padrões de listas */
+/* Títulos */
+h1 {
+  font-weight: 700;
+}
+
+/* Listas */
 ul,
 ol {
   list-style: none;
 }
 
-/* Links sem sublinhado e com herança de cor */
+/* Links */
 a {
   text-decoration: none;
   color: inherit;
 }
 
-/* Imagens e mídias responsivas */
+/* Mídias responsivas */
 img,
 picture,
 video,
@@ -44,7 +50,7 @@ svg {
   max-width: 100%;
 }
 
-/* Inputs e botões com fonte consistente */
+/* Inputs e botões */
 input,
 button,
 textarea,
@@ -63,4 +69,9 @@ button {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+
+/* Estrutura do layout */
+main {
+  flex: 1;
 }
