@@ -1,34 +1,173 @@
 body {
-  background-color: #e9e9e9ff;
-  color: #222;
+  background-color: #f0f2f5;
+  color: #333;
+  font-family: "Roboto", sans-serif;
 }
 
 /* Conteúdo principal */
 main {
-  max-width: 1200px;
+  width: 100%;
+  max-width: 400px; /* Sua preferência de largura */
   margin: 0 auto;
-  padding: 1rem;
-
+  padding: 2rem 1rem;
   display: flex;
   flex-direction: column;
+  gap: 15px;
+  box-sizing: border-box;
 }
 
-/* Footer */
-footer {
+h3 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 10px;
   text-align: center;
-  color: white;
-  background-color: #444444;
-  padding: 16px;
-  font-size: 0.8rem;
 }
 
-/* Bloco salário */
+/* Estilização dos Inputs */
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+input {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+  background-color: #fff;
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  outline: none;
+  border-color: #1e90ff;
+}
+
+/* Botão Calcular com Degradê */
+#calculate {
+  margin: 15px 0;
+  padding: 16px;
+  width: 100%;
+  background: linear-gradient(135deg, #1e90ff, #d24dff);
+  color: white;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  box-shadow: 0 5px 15px rgba(30, 144, 255, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  border: none;
+}
+
+#calculate:active {
+  transform: scale(0.97);
+}
+
+/* Seção de Resultados */
+/* Seção de Resultados */
+#resultado {
+  display: flex;
+  flex-wrap: nowrap; /* Força a ficarem na mesma linha */
+  justify-content: center;
+  gap: 10px; /* Reduzi um pouco o espaço entre eles */
+  margin-top: 15px;
+  width: 100%;
+}
+
+.card {
+  background: white;
+  padding: 15px 10px; /* Reduzi o padding para o conteúdo caber melhor */
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  /* Ajuste para caberem dois em 400px */
+  flex: 1; 
+  min-width: 0; /* Remove a restrição de tamanho mínimo anterior */
+  box-sizing: border-box;
+}
+
+.card h4 { 
+  font-size: 0.85rem; 
+  color: #777; 
+  margin: 5px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.card .valor-moeda { 
+  font-weight: 900; 
+  font-size: 1rem; 
+  color: #222;
+}
+
+/* .card .porcentagem { 
+  font-size: 2.2rem; 
+  font-weight: 900; 
+  margin: 12px 0;
+  line-height: 1;
+} */
+
+.card .porcentagem { 
+  font-size: 1.6rem; 
+  margin: 8px 0;
+}
+
+.card p { 
+  font-size: 0.75rem; 
+  color: #999; 
+  margin-bottom: 15px; 
+  line-height: 1.2;
+}
+
+/* Barra de Progresso */
+.progress-bar {
+  background: #f0f0f0;
+  border-radius: 10px;
+  height: 8px;
+  width: 90%;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.5s ease-out;
+}
+
+/* Rodapé de Referência */
+.salariominimo {
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 15px;
+  padding: 15px;
+  margin-top: 30px;
+}
+
+.salariominimo h6 { 
+  margin-bottom: 12px; 
+  font-size: 0.8rem; 
+  color: #666;
+  text-align: center;
+}
+
 .salario {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.75rem;
-  padding: 5px;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 8px;
 }
 
 .salario img {
@@ -36,28 +175,9 @@ footer {
   height: auto;
 }
 
-.salariominimo {
-  border: 2px solid black;
-  border-radius: 10px;
-  padding: 5px;
-
-  margin-top: auto; /* empurra para o fundo do main */
-}
-
-/* Botões */
-button {
-  margin: 10px 0;
-  padding: 8px;
-  width: 100%;
-  background-color: #acacac;
-  border-radius: 12px;
+footer {
+  text-align: center;
+  color: #aaa;
+  padding: 20px;
   font-size: 0.8rem;
-}
-
-input{
-  width: 100%;
-}
-
-.input-group{
-  margin: 10px 0;
 }

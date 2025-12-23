@@ -1,72 +1,102 @@
-// Salários mínimos
+// Salários mínimos de referência
 const salarioMinimo = {
   br: 1518,
   pt: 870,
 };
 
-// Elementos do salário mínimo (divs)
+// Elementos da interface
 const inputSalarioMinimoBR = document.getElementById("salarioMinimo-br");
 const inputSalarioMinimoPT = document.getElementById("salarioMinimo-pt");
-
-// Formatação de moeda
-const salarioFormatadoBR = new Intl.NumberFormat("pt-BR", {
-  style: "currency",
-  currency: "BRL",
-}).format(salarioMinimo.br);
-
-const salarioFormatadoPT = new Intl.NumberFormat("pt-PT", {
-  style: "currency",
-  currency: "EUR",
-}).format(salarioMinimo.pt);
-
-// Exibe os salários
-inputSalarioMinimoBR.textContent = salarioFormatadoBR;
-inputSalarioMinimoPT.textContent = salarioFormatadoPT;
-
-// Inputs de produto
 const produtoBR = document.getElementById("produto-br");
 const produtoPT = document.getElementById("produto-pt");
-
-// Botão e resultado
 const botaoCalcular = document.getElementById("calculate");
 const resultado = document.getElementById("resultado");
 
-// Evento do botão
+// Função para formatar moeda
+const formatarMoeda = (valor, local, moeda) => {
+  return new Intl.NumberFormat(local, {
+    style: "currency",
+    currency: moeda,
+  }).format(valor);
+};
+
+// Exibe salários de referência no rodapé ao carregar a página
+if (inputSalarioMinimoBR)
+  inputSalarioMinimoBR.textContent = formatarMoeda(
+    salarioMinimo.br,
+    "pt-BR",
+    "BRL"
+  );
+if (inputSalarioMinimoPT)
+  inputSalarioMinimoPT.textContent = formatarMoeda(
+    salarioMinimo.pt,
+    "pt-PT",
+    "EUR"
+  );
+
+// Função para definir a cor dinâmica baseada no percentual
+const definirCor = (p) => {
+  if (p <= 50) return "#1e8e3e"; // Verde (baixo impacto)
+  if (p <= 75) return "#fbbc04"; // Amarelo (médio impacto)
+  if (p <= 100) return "#d93025"; // Vermelho (alto impacto)
+  return "#9c27b0"; // Roxo (crítico / acima de 100%)
+};
+
+// Evento de clique para o cálculo
 botaoCalcular.addEventListener("click", function () {
-  // Converte valores para número
   const valorProdutoBR = Number(produtoBR.value);
   const valorProdutoPT = Number(produtoPT.value);
 
-  // Se ambos forem inválidos (vazio ou zero)
+  // Validação simples
   if (valorProdutoBR <= 0 && valorProdutoPT <= 0) {
-    alert("Preencha os valores dos produtos");
+    alert("Por favor, insira o valor de pelo menos um produto.");
     return;
   }
 
-  // Limpa resultado anterior
+  // Limpa os cards anteriores
   resultado.innerHTML = "";
 
-  // Brasil
-  if (valorProdutoBR > 0) {
-    const percentualBR = (valorProdutoBR / salarioMinimo.br) * 100;
+  // Array de objetos para facilitar a criação dos cards via loop
+  const configuracao = [
+    {
+      label: "No Brasil",
+      valor: valorProdutoBR,
+      salario: salarioMinimo.br,
+      local: "pt-BR",
+      moeda: "BRL",
+    },
+    {
+      label: "Em Portugal",
+      valor: valorProdutoPT,
+      salario: salarioMinimo.pt,
+      local: "pt-PT",
+      moeda: "EUR",
+    },
+  ];
 
-    resultado.innerHTML += `
-      <p>
-        No Brasil, esse produto consome 
-        ${percentualBR.toFixed(2)}% do salário mínimo mensal.
-      </p>
-    `;
-  }
+  configuracao.forEach((item) => {
+    // Apenas gera o card se houver um valor preenchido para o país
+    if (item.valor > 0) {
+      const percentual = (item.valor / item.salario) * 100;
+      const corDinamica = definirCor(percentual);
+      const valorFormatado = formatarMoeda(item.valor, item.local, item.moeda);
 
-  // Portugal
-  if (valorProdutoPT > 0) {
-    const percentualPT = (valorProdutoPT / salarioMinimo.pt) * 100;
-
-    resultado.innerHTML += `
-      <p>
-        Em Portugal, esse produto consome 
-        ${percentualPT.toFixed(2)}% do salário mínimo mensal.
-      </p>
-    `;
-  }
+      resultado.innerHTML += `
+        <div class="card">
+          <div class="valor-moeda">${valorFormatado}</div>
+          <h4>${item.label}</h4>
+          <div class="porcentagem" style="color: ${corDinamica}">
+            ${percentual.toFixed(2)}%
+          </div>
+          <p>do salário mínimo mensal</p>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: ${Math.min(
+              percentual,
+              100
+            )}%; background-color: ${corDinamica};"></div>
+          </div>
+        </div>
+      `;
+    }
+  });
 });
