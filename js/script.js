@@ -1,7 +1,7 @@
 // Configuração dos salários mínimos
 const salarioMinimo = {
-  br: 1518,
-  pt: 870,
+  br: 1621,
+  pt: 920,
   usa: 1160,
 };
 
