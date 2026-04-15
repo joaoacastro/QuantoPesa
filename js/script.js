@@ -1,13 +1,69 @@
-// Configuração dos salários mínimos
+// Configuração dos salários mínimos (abril 2026)
 const salarioMinimo = {
   br: 1621,
   pt: 920,
-  usa: 1160,
+  usa: 1256,
 };
 
 // Elementos da interface
-const botaoCalcular = document.getElementById("calculate");
-const resultado = document.getElementById("resultado");
+const botaoTema = document.getElementById("theme-toggle");
+const campos = [
+  {
+    id: "produto-br",
+    label: "Valor em Reais (R$)",
+    salario: salarioMinimo.br,
+    local: "pt-BR",
+    moeda: "BRL",
+    percentId: "percent-br",
+    fillId: "fill-br",
+    cardId: "card-br",
+  },
+  {
+    id: "produto-pt",
+    label: "Valor em Euros (€)",
+    salario: salarioMinimo.pt,
+    local: "pt-PT",
+    moeda: "EUR",
+    percentId: "percent-pt",
+    fillId: "fill-pt",
+    cardId: "card-pt",
+  },
+  {
+    id: "produto-usa",
+    label: "Valor em Dólares (US$)",
+    salario: salarioMinimo.usa,
+    local: "en-US",
+    moeda: "USD",
+    percentId: "percent-usa",
+    fillId: "fill-usa",
+    cardId: "card-usa",
+  },
+];
+
+const definirTema = (tema) => {
+  const escuro = tema === "dark";
+  document.body.classList.toggle("dark-theme", escuro);
+  botaoTema.textContent = escuro ? "Tema claro" : "Tema escuro";
+  localStorage.setItem("tema", tema);
+};
+
+const iniciarTema = () => {
+  const temaSalvo = localStorage.getItem("tema");
+  const temaInicial =
+    temaSalvo ||
+    (window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light");
+  definirTema(temaInicial);
+};
+
+botaoTema.addEventListener("click", () => {
+  definirTema(
+    document.body.classList.contains("dark-theme") ? "light" : "dark",
+  );
+});
+
+iniciarTema();
 
 // Função para formatar moeda
 const formatarMoeda = (valor, local, moeda) => {
@@ -21,17 +77,17 @@ const formatarMoeda = (valor, local, moeda) => {
 document.getElementById("salarioMinimo-br").textContent = formatarMoeda(
   salarioMinimo.br,
   "pt-BR",
-  "BRL"
+  "BRL",
 );
 document.getElementById("salarioMinimo-pt").textContent = formatarMoeda(
   salarioMinimo.pt,
   "pt-PT",
-  "EUR"
+  "EUR",
 );
 document.getElementById("salarioMinimo-usa").textContent = formatarMoeda(
   salarioMinimo.usa,
   "en-US",
-  "USD"
+  "USD",
 );
 
 // Define a cor baseada no peso no bolso
@@ -42,79 +98,36 @@ const definirCor = (p) => {
   return "#9c27b0"; // Roxo (Crítico)
 };
 
-botaoCalcular.addEventListener("click", function () {
-  // Lista de campos para processar
-  const dados = [
-    {
-      id: "produto-br",
-      label: "No Brasil",
-      salario: salarioMinimo.br,
-      local: "pt-BR",
-      moeda: "BRL",
-    },
-    {
-      id: "produto-pt",
-      label: "Em Portugal",
-      salario: salarioMinimo.pt,
-      local: "pt-PT",
-      moeda: "EUR",
-    },
-    {
-      id: "produto-usa",
-      label: "Nos EUA",
-      salario: salarioMinimo.usa,
-      local: "en-US",
-      moeda: "USD",
-    },
-  ];
-
-  resultado.innerHTML = ""; // Limpa resultados anteriores
-  let algumPreenchido = false;
-
-  dados.forEach((item) => {
-    const inputVal = document.getElementById(item.id).value;
-    const valor = Number(inputVal);
+const atualizarCartoes = () => {
+  campos.forEach((item) => {
+    const input = document.getElementById(item.id);
+    const card = document.getElementById(item.cardId);
+    const percentEl = document.getElementById(item.percentId);
+    const fillEl = document.getElementById(item.fillId);
+    const valor = Number(input.value);
 
     if (valor > 0) {
-      algumPreenchido = true;
       const percentual = (valor / item.salario) * 100;
       const cor = definirCor(percentual);
-
-      // Cria a estrutura do card inspirada na lista enviada
-      const cardId = `fill-${item.id}`;
-      resultado.innerHTML += `
-        <div class="card">
-          <div class="info-local">
-            <h4>${item.label}</h4>
-            <div class="valor-moeda">${formatarMoeda(
-              valor,
-              item.local,
-              item.moeda
-            )}</div>
-          </div>
-          
-          <div class="porcentagem" style="color: ${cor}">
-            ${percentual.toFixed(2)}%
-          </div>
-          
-          <div class="container-barra">
-            <div class="progress-bar">
-              <div class="progress-fill" id="${cardId}" style="background-color: ${cor};"></div>
-            </div>
-            <div class="legenda-barra">do salário mínimo mensal</div>
-          </div>
-        </div>
-      `;
-
-      // Pequeno delay para garantir que o CSS renderizou antes de animar a barra
-      setTimeout(() => {
-        const barra = document.getElementById(cardId);
-        if (barra) barra.style.width = `${Math.min(percentual, 100)}%`;
-      }, 50);
+      card.classList.remove("card--empty");
+      card.style.borderColor = cor;
+      percentEl.textContent = `${percentual.toFixed(2)}%`;
+      percentEl.style.color = cor;
+      fillEl.style.backgroundColor = cor;
+      fillEl.style.width = `${Math.min(percentual, 100)}%`;
+    } else {
+      card.classList.add("card--empty");
+      card.style.borderColor = "rgba(255,255,255,0.1)";
+      percentEl.textContent = "--";
+      percentEl.style.color = "var(--muted)";
+      fillEl.style.width = "0";
     }
   });
+};
 
-  if (!algumPreenchido) {
-    alert("Por favor, insira o valor de pelo menos um produto.");
-  }
+campos.forEach((item) => {
+  const input = document.getElementById(item.id);
+  input.addEventListener("input", atualizarCartoes);
 });
+
+atualizarCartoes();

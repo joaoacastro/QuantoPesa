@@ -30,46 +30,85 @@
   </head>
   <body>
     <main>
-      <h3>Quanto Pesa no bolso?</h3>
+      <div class="header-actions">
+        <h3>Quanto Pesa no bolso?</h3>
+        <button id="theme-toggle" type="button">Mudar tema</button>
+      </div>
 
-      <section class="inputs">
-        <div class="input-group">
-          <label for="produto-br">Valor do produto (R$)</label>
-          <input
-            type="number"
-            id="produto-br"
-            inputmode="decimal"
-            placeholder="0.00"
-          />
+      <section class="cards">
+        <div class="card card--empty" id="card-br">
+          <div class="card-header">
+            <!-- <h4>Valor em Reais (R$)</h4> -->
+          </div>
+        
+          <div class="card-field">
+            <span class="input-prefix">R$</span>
+            <input
+              class="currency-input"
+              type="number"
+              id="produto-br"
+              inputmode="decimal"
+              placeholder="0.00"
+            />
+          </div>
+          <div class="card-footer">
+            <div class="percent" id="percent-br">--</div>
+            <div class="legend">do salário mínimo (BR)</div>
+            <div class="progress-bar">
+              <div class="progress-fill" id="fill-br"></div>
+            </div>
+          </div>
         </div>
 
-        <div class="input-group">
-          <label for="produto-pt">Valor do produto (€)</label>
-          <input
-            type="number"
-            id="produto-pt"
-            inputmode="decimal"
-            placeholder="0.00"
-          />
+        <div class="card card--empty" id="card-pt">
+          <div class="card-header">
+            <!-- <h4>Valor em Euros (€)</h4> -->
+          </div>
+          <div class="card-field">
+            <span class="input-prefix">€</span>
+            <input
+              class="currency-input"
+              type="number"
+              id="produto-pt"
+              inputmode="decimal"
+              placeholder="0.00"
+            />
+          </div>
+          <div class="card-footer">
+            <div class="percent" id="percent-pt">--</div>
+            <div class="legend">do salário mínimo (PT)</div>
+            <div class="progress-bar">
+              <div class="progress-fill" id="fill-pt"></div>
+            </div>
+          </div>
         </div>
 
-        <div class="input-group">
-          <label for="produto-usa">Valor do produto (US$)</label>
-          <input
-            type="number"
-            id="produto-usa"
-            inputmode="decimal"
-            placeholder="0.00"
-          />
+        <div class="card card--empty" id="card-usa">
+          <div class="card-header">
+            <!-- <h4>Valor em Dólares (US$)</h4> -->
+          </div>
+          <div class="card-field">
+            <span class="input-prefix">US$</span>
+            <input
+              class="currency-input"
+              type="number"
+              id="produto-usa"
+              inputmode="decimal"
+              placeholder="0.00"
+            />
+          </div>
+          <div class="card-footer">
+            <div class="percent" id="percent-usa">--</div>
+            <div class="legend">do salário mínimo (EUA)</div>
+            <div class="progress-bar">
+              <div class="progress-fill" id="fill-usa"></div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <button id="calculate">Calcular</button>
-
-      <section id="resultado"></section>
-
       <div class="salariominimo">
-        <h6>Salário mínimo mensal de referência (dez/2025)</h6>
+        <h6>Salário mínimo mensal de referência (abr/2026)</h6>
 
         <div class="salario">
           <img src="https://flagcdn.com/w40/br.png" alt="Brasil" width="22" />
@@ -89,7 +128,7 @@
     </main>
 
     <footer>
-      <p>© 2025</p>
+      <p>Developed by <a href="https://github.com/joaoacastro" target="_blank" rel="noopener noreferrer">joaoacastro</a></p>
     </footer>
 
     <script src="js/script.js"></script>
