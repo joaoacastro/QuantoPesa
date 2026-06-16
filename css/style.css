@@ -200,6 +200,34 @@ h3 {
   gap: 4px;
 }
 
+.converter-link {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.converter-text {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.converter-anchor {
+  display: inline-block;
+  padding: 8px 12px;
+  background: linear-gradient(90deg, var(--primary-start), var(--primary-end));
+  color: var(--button-text);
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+  box-shadow: 0 6px 18px var(--shadow);
+}
+
+.converter-anchor:hover {
+  opacity: 0.95;
+}
+
 #theme-toggle {
   padding: 10px 16px;
   background: none;

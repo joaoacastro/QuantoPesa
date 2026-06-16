@@ -98,15 +98,22 @@ const definirCor = (p) => {
   return "#9c27b0"; // Roxo (Crítico)
 };
 
+const formatNumero = (valor, local) => {
+  return new Intl.NumberFormat(local, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(valor);
+};
+
 const atualizarCartoes = () => {
   campos.forEach((item) => {
     const input = document.getElementById(item.id);
     const card = document.getElementById(item.cardId);
     const percentEl = document.getElementById(item.percentId);
     const fillEl = document.getElementById(item.fillId);
-    const equivalentEl = document.getElementById(
-      `equivalent-${item.cardId.split("-")[1]}`,
-    );
+    const pais = item.cardId.split("-")[1];
+    const equivalentEl = document.getElementById(`equivalent-${pais}`);
+    const converterEl = document.getElementById(`converter-link-${pais}`);
     const valor = Number(input.value);
 
     if (valor > 0) {
@@ -119,18 +126,18 @@ const atualizarCartoes = () => {
       fillEl.style.backgroundColor = cor;
       fillEl.style.width = `${Math.min(percentual, 100)}%`;
 
-      // Calcular equivalentes nas outras moedas
-      equivalentEl.style.display = "block";
+      // Mostrar equivalentes e link de conversão
+      if (equivalentEl) equivalentEl.style.display = "block";
+      if (converterEl) converterEl.style.display = "flex";
 
       campos.forEach((outroItem) => {
         if (outroItem.id !== item.id) {
-          const paisAtual = item.cardId.split("-")[1];
           const paisOutro = outroItem.cardId.split("-")[1];
           const equivalente = (percentual / 100) * outroItem.salario;
-          const elementoId = `equiv-${paisAtual}-${paisOutro}`;
+          const elementoId = `equiv-${pais}-${paisOutro}`;
           const elemento = document.getElementById(elementoId);
           if (elemento) {
-            elemento.textContent = equivalente.toFixed(2);
+            elemento.textContent = formatNumero(equivalente, outroItem.local);
           }
         }
       });
@@ -140,7 +147,8 @@ const atualizarCartoes = () => {
       percentEl.textContent = "--";
       percentEl.style.color = "var(--muted)";
       fillEl.style.width = "0";
-      equivalentEl.style.display = "none";
+      if (equivalentEl) equivalentEl.style.display = "none";
+      if (converterEl) converterEl.style.display = "none";
     }
   });
 };
