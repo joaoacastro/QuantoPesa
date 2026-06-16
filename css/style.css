@@ -78,7 +78,10 @@ h3 {
   gap: 18px;
   min-height: 250px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s, opacity 0.2s, border-color 0.2s;
+  transition:
+    transform 0.2s,
+    opacity 0.2s,
+    border-color 0.2s;
 }
 
 .card:hover {
@@ -123,7 +126,9 @@ h3 {
   text-align: center;
   background-color: var(--bg);
   color: var(--text);
-  transition: border-color 0.3s, background-color 0.3s;
+  transition:
+    border-color 0.3s,
+    background-color 0.3s;
 }
 
 .currency-input:focus {
@@ -169,6 +174,32 @@ h3 {
   background: transparent;
 }
 
+.equivalent-values {
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+}
+
+.equivalent-label {
+  color: var(--muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.equivalent-item {
+  color: var(--text);
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+}
+
 #theme-toggle {
   padding: 10px 16px;
   background: none;
@@ -176,7 +207,10 @@ h3 {
   border-radius: 999px;
   color: var(--text);
   cursor: pointer;
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    border-color 0.2s;
 }
 
 #theme-toggle:hover {
@@ -194,7 +228,6 @@ h3 {
   margin: 0;
   font-size: 1.5rem;
 }
-
 
 /* ==========================================================================
    REFERÊNCIA E FOOTER

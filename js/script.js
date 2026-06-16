@@ -104,6 +104,9 @@ const atualizarCartoes = () => {
     const card = document.getElementById(item.cardId);
     const percentEl = document.getElementById(item.percentId);
     const fillEl = document.getElementById(item.fillId);
+    const equivalentEl = document.getElementById(
+      `equivalent-${item.cardId.split("-")[1]}`,
+    );
     const valor = Number(input.value);
 
     if (valor > 0) {
@@ -115,12 +118,29 @@ const atualizarCartoes = () => {
       percentEl.style.color = cor;
       fillEl.style.backgroundColor = cor;
       fillEl.style.width = `${Math.min(percentual, 100)}%`;
+
+      // Calcular equivalentes nas outras moedas
+      equivalentEl.style.display = "block";
+
+      campos.forEach((outroItem) => {
+        if (outroItem.id !== item.id) {
+          const paisAtual = item.cardId.split("-")[1];
+          const paisOutro = outroItem.cardId.split("-")[1];
+          const equivalente = (percentual / 100) * outroItem.salario;
+          const elementoId = `equiv-${paisAtual}-${paisOutro}`;
+          const elemento = document.getElementById(elementoId);
+          if (elemento) {
+            elemento.textContent = equivalente.toFixed(2);
+          }
+        }
+      });
     } else {
       card.classList.add("card--empty");
       card.style.borderColor = "rgba(255,255,255,0.1)";
       percentEl.textContent = "--";
       percentEl.style.color = "var(--muted)";
       fillEl.style.width = "0";
+      equivalentEl.style.display = "none";
     }
   });
 };
